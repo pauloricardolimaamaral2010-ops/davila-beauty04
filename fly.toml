@@ -1,0 +1,10 @@
+app = "davila-beauty"
+primary_region = "ewr"
+
+[http_service]
+internal_port = 5000
+force_https = true
+auto_stop_regions = []
+
+# O banco SQLite fica em instance/. Se o plano oferecer disco efêmero,
+# use PostgreSQL via DATABASE_URL (ver README.md).

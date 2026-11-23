@@ -1,0 +1,74 @@
+﻿/* Davila Beauty — fontes locais (não dependem da internet) */
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 400;
+  src: url('../fonts/co3smX5slCNuHLi8bLeY9MK7whWMhyjYrGFEsdtdc62E6zd58jDOjw.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 500;
+  src: url('../fonts/co3smX5slCNuHLi8bLeY9MK7whWMhyjYrGFEsdtdc62E6zd5wDDOjw.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/co3umX5slCNuHLi8bLeY9MK7whWMhyjypVO7abI26QOD_v86GnM.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../fonts/co3umX5slCNuHLi8bLeY9MK7whWMhyjypVO7abI26QOD_s06GnM.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 600;
+  src: url('../fonts/co3umX5slCNuHLi8bLeY9MK7whWMhyjypVO7abI26QOD_iE9GnM.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jost';
+  font-style: normal;
+  font-weight: 300;
+  src: url('../fonts/92zPtBhPNqw79Ij1E865zBUv7mz9JQVG.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jost';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/92zPtBhPNqw79Ij1E865zBUv7myjJQVG.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jost';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../fonts/92zPtBhPNqw79Ij1E865zBUv7myRJQVG.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jost';
+  font-style: normal;
+  font-weight: 600;
+  src: url('../fonts/92zPtBhPNqw79Ij1E865zBUv7mx9IgVG.ttf') format('truetype');
+  font-display: swap;
+}
+

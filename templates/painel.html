@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#faf5ef">
+  <title>{{ studio.nome }} · Painel da agenda</title>
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="page-panel">
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand-mini" href="{{ url_for('pagina_painel') }}">
+        <span class="monogram monogram-sm">D</span>
+        <span class="brand-mini-text">
+          <strong>{{ studio.nome }}</strong>
+          <small>Painel da dona</small>
+        </span>
+      </a>
+      <div class="topbar-actions">
+        <a class="topbar-link" href="{{ url_for('pagina_agendamento') }}">
+          <span>Página de agendamento</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <form method="post" action="{{ url_for('sair_painel') }}">
+          <button type="submit" class="topbar-link" title="Sair do painel">
+            <span>Sair</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h9"/></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <main class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Agenda do studio</p>
+        <h1>Olá, Davila</h1>
+        <p class="muted" id="hoje-label">Carregando a agenda…</p>
+      </div>
+      <button type="button" class="btn-ghost btn-refresh" id="atualizar">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6"/></svg>
+        Atualizar
+      </button>
+    </div>
+
+    <section class="stats" aria-label="Resumo">
+      <article class="stat">
+        <span class="stat-label">Hoje</span>
+        <strong class="stat-value" id="stat-hoje">—</strong>
+        <span class="stat-foot">atendimentos</span>
+      </article>
+      <article class="stat">
+        <span class="stat-label">Próximos 7 dias</span>
+        <strong class="stat-value" id="stat-semana">—</strong>
+        <span class="stat-foot">na agenda</span>
+      </article>
+      <article class="stat">
+        <span class="stat-label">Aguardando</span>
+        <strong class="stat-value" id="stat-aguardando">—</strong>
+        <span class="stat-foot">para confirmar</span>
+      </article>
+      <article class="stat stat-accent">
+        <span class="stat-label">Previsto hoje</span>
+        <strong class="stat-value" id="stat-previsto">—</strong>
+        <span class="stat-foot">em serviços</span>
+      </article>
+    </section>
+
+    <div class="toolbar">
+      <div class="tabs" role="tablist" aria-label="Filtrar agenda">
+        <button type="button" class="tab" data-filtro="hoje" role="tab" aria-selected="false">Hoje</button>
+        <button type="button" class="tab" data-filtro="amanha" role="tab" aria-selected="false">Amanhã</button>
+        <button type="button" class="tab is-active" data-filtro="semana" role="tab" aria-selected="true">7 dias</button>
+        <button type="button" class="tab" data-filtro="todas" role="tab" aria-selected="false">Todas</button>
+      </div>
+
+      <label class="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input type="search" id="busca" placeholder="Buscar cliente ou serviço" aria-label="Buscar cliente ou serviço">
+      </label>
+    </div>
+
+    <div id="lista" class="agenda"></div>
+
+    <div id="vazio" class="empty" hidden>
+      <span class="monogram">D</span>
+      <h2>Nada por aqui ainda</h2>
+      <p class="muted">Quando alguém agendar pelo site, o horário aparece nesta lista automaticamente.</p>
+      <a class="btn-ghost" href="{{ url_for('pagina_agendamento') }}">Abrir página de agendamento</a>
+    </div>
+
+    <p class="panel-foot">Atualiza sozinho a cada 30 segundos · última atualização <span id="atualizado">—</span></p>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="{{ url_for('static', filename='js/panel.js') }}"></script>
+</body>
+</html>

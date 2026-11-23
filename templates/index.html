@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#faf5ef">
+  <title>{{ studio.nome }} · Agende seu horário</title>
+  <meta name="description" content="Design de sobrancelhas, henna, laminação e micropigmentação na Davila Beauty. Escolha o serviço e reserve seu horário em menos de um minuto.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Davila Beauty · Studio de sobrancelhas">
+  <meta property="og:description" content="Agende seu design de sobrancelhas online. Atendimento com calma e cuidado, de segunda a sábado.">
+  <meta property="og:locale" content="pt_BR">
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="page-booking">
+
+  <main class="booking-shell">
+    <aside class="brand-panel">
+      <div class="brand-top">
+        <span class="monogram">D</span>
+        <span class="brand-tag">{{ studio.assinatura }}</span>
+      </div>
+
+      <h1>Davila<br><em>Beauty</em></h1>
+
+      <p class="brand-copy">
+        Sobrancelhas desenhadas para o seu rosto, com calma e cuidado.
+        Reserve seu horário em menos de um minuto.
+      </p>
+
+      <ul class="brand-facts">
+        <li><span>Horário</span>{{ studio.horario }}</li>
+        <li><span>Endereço</span>{{ studio.endereco }}</li>
+        <li><span>Contato</span>{{ studio.telefone }}</li>
+        <li><span>Instagram</span>{{ studio.instagram }}</li>
+      </ul>
+
+      <blockquote class="brand-quote">
+        <p>“Sobrancelha boa é a que combina com o seu rosto — não com o da vizinha.”</p>
+        <footer>Davila · design autoral</footer>
+      </blockquote>
+    </aside>
+
+    <section class="booking-card">
+      <header class="booking-head">
+        <p class="eyebrow">Agendamento online</p>
+        <h2>Reserve seu horário</h2>
+        <p class="muted">Escolha o serviço, o dia e o horário. Seu agendamento aparece na agenda do studio na hora.</p>
+      </header>
+
+      <form id="form-agendamento" novalidate>
+        <div class="step">
+          <div class="step-head">
+            <span class="step-num">01</span>
+            <h3>Escolha o serviço</h3>
+          </div>
+
+          <div class="services">
+            {% for s in servicos %}
+            <label class="service">
+              <input type="radio" name="servico" value="{{ s.id }}"
+                     data-nome="{{ s.nome }}" data-preco="{{ s.preco }}" data-duracao="{{ s.duracao }}">
+              <span class="service-body">
+                {% if s.destaque %}<span class="service-badge">Mais pedido</span>{% endif %}
+                <span class="service-name">{{ s.nome }}</span>
+                <span class="service-meta">{{ s.descricao }} · {{ s.duracao }} min</span>
+                <span class="service-price">{{ s.preco | moeda }}</span>
+              </span>
+              <span class="service-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+              </span>
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-head">
+            <span class="step-num">02</span>
+            <h3>Escolha o dia</h3>
+          </div>
+
+          <div class="days" role="group" aria-label="Dias disponíveis">
+            {% for d in dias %}
+            <button type="button" class="day" data-data="{{ d.iso }}"
+                    data-label="{{ d.rotulo }}, {{ d.dia }} {{ d.mes }}"
+                    {% if d.fechado %}disabled data-fechado="true"{% endif %}>
+              <span class="dw">{{ d.rotulo }}</span>
+              <span class="dn">{{ d.dia }}</span>
+              <span class="dm">{% if d.fechado %}fechado{% else %}{{ d.mes }}{% endif %}</span>
+            </button>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-head">
+            <span class="step-num">03</span>
+            <h3>Escolha o horário</h3>
+          </div>
+          <div id="slots" class="slots">
+            <p class="hint">Selecione um dia para ver os horários livres.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-head">
+            <span class="step-num">04</span>
+            <h3>Seus dados</h3>
+          </div>
+
+          <div class="fields">
+            <label class="field">
+              <span>Nome completo</span>
+              <input type="text" id="nome" name="nome" autocomplete="name" placeholder="Como podemos te chamar?" maxlength="80">
+            </label>
+            <label class="field">
+              <span>WhatsApp</span>
+              <input type="tel" id="whatsapp" name="whatsapp" inputmode="numeric" autocomplete="tel" placeholder="(11) 99999-9999" maxlength="15">
+            </label>
+            <label class="field field-wide">
+              <span>Observação <small>opcional</small></span>
+              <input type="text" id="obs" name="obs" placeholder="Alguma preferência ou alergia?" maxlength="280">
+            </label>
+          </div>
+        </div>
+
+        <div class="checkout">
+          <div class="summary">
+            <span class="summary-label">Seu horário</span>
+            <strong id="summary">Escolha serviço, dia e horário</strong>
+          </div>
+          <button type="submit" class="btn-primary" id="confirmar">Confirmar agendamento</button>
+        </div>
+      </form>
+
+      <div id="sucesso" class="success" hidden>
+        <span class="success-badge" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+        </span>
+        <p class="eyebrow">Tudo certo</p>
+        <h2 id="sucesso-titulo">Horário reservado!</h2>
+        <p class="muted">Seu agendamento já está na agenda do studio. Vamos te esperar com carinho.</p>
+
+        <dl class="success-detail">
+          <div><dt>Serviço</dt><dd id="sucesso-servico">—</dd></div>
+          <div><dt>Quando</dt><dd id="sucesso-quando">—</dd></div>
+          <div><dt>Valor</dt><dd id="sucesso-preco">—</dd></div>
+          <div><dt>Nome</dt><dd id="sucesso-nome">—</dd></div>
+        </dl>
+
+        <button type="button" class="btn-ghost" id="novo-agendamento">Fazer outro agendamento</button>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="{{ url_for('static', filename='js/booking.js') }}"></script>
+</body>
+</html>

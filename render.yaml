@@ -1,0 +1,38 @@
+# Davila Beauty — blueprint do Render
+#
+# Como usar:
+#   1. Crie um repositório (GitHub/GitLab/Bitbucket) com a pasta davila-beauty.
+#   2. No Render → Dashboard → Blueprints → New Blueprint Instance → seleciona o repositório.
+#   3. Dê um nome (ex.: DavilaBeauty) e clique em "Apply".
+#   4. A URL pública aparecerá logo após o deploy: https://<seunome>.onrender.com
+#
+# Variáveis de ambiente:
+#   PANEL_SENHA  — senha do painel da dona (troque "davila" ANTES de publicar!)
+#   SECRET_KEY   — gerada automaticamente (generateValue).
+#   DATABASE_URL — do PostgreSQL do Render → os agendamentos se guardam por tempo indeterminado.
+
+services:
+  - type: web
+    name: Davila-Beauty
+    runtime: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app --bind 0.0.0.0:$PORT"
+    healthCheckPath: /healthz
+    envVars:
+      - key: PANEL_SENHA
+        value: davila
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: DavilaBeautyDB
+          property: connectionString
+
+databases:
+  - name: DavilaBeautyDB
+    databaseName: davila_beauty
+    user: davila_beauty
+    plan: free
+    # Nota: se o PostgreSQL grátis estiver rebaixado/desativado, crie um manualmente
+    # no dashboard e use o plano que você pagar (você pode adiar isso).

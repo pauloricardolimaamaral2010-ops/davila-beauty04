@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#faf5ef">
+  <meta name="robots" content="noindex, nofollow">
+  <title>{{ studio.nome }} · Área do studio</title>
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="page-login">
+
+  <main class="login-card">
+    <span class="monogram">D</span>
+    <p class="eyebrow">Área do studio</p>
+    <h1>A agenda da Davila</h1>
+    <p class="muted">Digite a senha para abrir o painel de agendamentos.</p>
+
+    <form class="login-form" method="post" action="{{ url_for('entrar_painel') }}">
+      {% if erro %}<p class="login-erro">{{ erro }}</p>{% endif %}
+      <label for="senha">
+        Senha
+        <input type="password" id="senha" name="senha" placeholder="••••••" autocomplete="current-password" required autofocus>
+      </label>
+      <button type="submit" class="btn-primary">Entrar no painel</button>
+    </form>
+
+    <a class="login-back" href="{{ url_for('pagina_agendamento') }}">Voltar ao agendamento</a>
+  </main>
+
+</body>
+</html>
